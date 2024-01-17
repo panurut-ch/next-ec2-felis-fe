@@ -6,26 +6,27 @@ import * as React from "react";
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import styles from "./page.module.css";
+import Type from "./header";
 
 // Define interfaces
-interface Pokemon {
+interface Cat {
   urlImage: string;
 }
 
-interface SinglePokemonResponse {
+interface SingleCatResponse {
   data: string;
 }
 
 // Define the Home component
 export default function Home() {
   // State to hold the Pokemon data
-  const [pokemon, setPokemon] = React.useState<Pokemon | null>(null);
+  const [cat, setCat] = React.useState<Cat | null>(null);
 
   // Function to fetch Pokemon data from the server
-  const fetchPokemon = async () => {
-    console.log("Fetching Pokemon");
+  const fetchCat = async () => {
+    console.log("Fetching Cat");
     try {
-      const res = await axios.get<SinglePokemonResponse>(
+      const res = await axios.get<SingleCatResponse>(
         `https://felis.panurut.dev/cat/image`
       );
       console.log("Response data:", res.data);
@@ -34,31 +35,34 @@ export default function Home() {
         urlImage: res.data.data,
       };
     } catch (e) {
-      console.error("Error fetching Pokemon:", e);
+      console.error("Error fetching Cat:", e);
       return null;
     }
   };
 
   // Function to handle the button click and change the image
   const handleChangeImage = () => {
-    fetchPokemon().then((p) => setPokemon(p));
+    fetchCat().then((p) => setCat(p));
   };
 
   // Effect to fetch Pokemon data when the component mounts
   React.useEffect(() => {
     console.log("Effect triggered");
-    fetchPokemon().then((p) => setPokemon(p));
+    fetchCat().then((p) => setCat(p));
   }, []);
 
   // JSX structure with Material-UI Button
   return (
     <main className={styles.main}>
+      <div>
+        <Type />
+      </div>
       <div className={styles.center}>
-        {pokemon && (
+        {cat && (
           <div className={styles.imageContainer}>
             <Image
-              src={pokemon.urlImage}
-              alt="Pokemon Image"
+              src={cat.urlImage}
+              alt="Cat Image"
               width={600}
               height={600}
               priority
