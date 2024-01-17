@@ -11,7 +11,7 @@ export default function Types() {
       <Typography variant="body1" gutterBottom>
         <p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Felis</b> (Latin for <i>cat</i>) was a
-          constellation created by French astronomer Jérôme Lalande in 1799. It
+          constellation created by French astronomer <b>Jérôme Lalande</b> in 1799. It
           was between the constellations of Antlia and Hydra.
         </p>
         <p>
