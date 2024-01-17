@@ -27,7 +27,7 @@ export default function Home() {
     console.log("Fetching Cat");
     try {
       const res = await axios.get<SingleCatResponse>(
-        `https://felis.panurut.dev/cat/image`
+        `https://api.panurut.dev/cat/image`
       );
       console.log("Response data:", res.data);
 
