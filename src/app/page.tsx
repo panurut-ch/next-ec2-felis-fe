@@ -26,7 +26,7 @@ export default function Home() {
     console.log("Fetching Pokemon");
     try {
       const res = await axios.get<SinglePokemonResponse>(
-        `http://18.139.255.208:3000/cat/image`
+        `https://felis.panurut.dev/cat/image`
       );
       console.log("Response data:", res.data);
 
