@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "@/app/page.module.css";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-import { styled } from "@mui/system";
+import { styled, useTheme } from "@mui/system";
 import CircularProgress from "@mui/material/CircularProgress";
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -27,15 +27,13 @@ interface Cat {
 
 interface SingleCatResponse {
   data: {
-    url: string;
-    height: number;
-    width: number;
-    breeds: Array<{
-      name: string;
-      temperament: string;
-      origin: string;
-      description: string;
-    }>;
+    catWidth: number;
+    catHeight: number;
+    catImageUrl: string;
+    catName: string;
+    catTemperament: string;
+    catOrigin: string;
+    catDescription: string;
   }[];
 }
 
@@ -50,16 +48,23 @@ const style = {
   backgroundColor: "black",
   "& li": {
     color: "inherit",
-  },
-  "& li:not(:last-child)": {
     borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+  },
+  // Responsive styles based on screen size
+  "@media (max-width: 430px)": {
+    maxWidth: "90vw !important", // Adjusted for viewport width
+    "& li": {
+      // Increase specificity for list items in the media query
+      color: "inherit !important",
+      borderBottom: "1px solid rgba(255, 255, 255, 0.12) !important",
+    },
   },
 };
 
 export default function Detail() {
   const [cat, setCat] = React.useState<Cat | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const FELIS_API = process.env.NEXT_PUBLIC_FELIS_API_DEV;
+  const FELIS_API = process.env.NEXT_PUBLIC_FELIS_API;
   console.log("FELIS_API", FELIS_API);
 
   const fetchCat = async () => {
@@ -74,24 +79,19 @@ export default function Detail() {
       console.log("catData", catData);
 
       if (catData) {
-        const originalWidth = catData.catWidth;
-        const originalHeight = catData.catHeight;
+        const originalWidth = (catData as any).catWidth;
+        const originalHeight = (catData as any).catHeight;
+        const catImageUrl = (catData as any).catImageUrl;
+        const catName = (catData as any).catName;
+        const catTemperament = (catData as any).catTemperament;
+        const catOrigin = (catData as any).catOrigin;
+        const catDescription = (catData as any).catDescription;
+
         const maxWidth = 600;
 
         // Calculate adjusted dimensions
         const newWidth = Math.min(originalWidth, maxWidth);
         const newHeight = (newWidth / originalWidth) * originalHeight;
-
-        const catImageUrl = catData.catImageUrl;
-        console.log("catImageUrl", catImageUrl);
-        const catName = catData.catName;
-        console.log("catName", catName);
-        const catTemperament = catData.catTemperament;
-        console.log("catTemperament", catTemperament);
-        const catOrigin = catData.catOrigin;
-        console.log("catOrigin", catOrigin);
-        const catDescription = catData.catDescription;
-        console.log("catDescription", catDescription);
 
         return {
           urlImage: catImageUrl,
@@ -128,7 +128,6 @@ export default function Detail() {
       <div className={styles.center}>
         {loading && (
           <div className={styles.loader}>
-            {/* Display loader component when loading is true */}
             <CircularProgress />
           </div>
         )}
@@ -144,20 +143,6 @@ export default function Detail() {
           </div>
         )}
       </div>
-      {/* {loading && (
-        <div className={styles.center}>
-          <List sx={style} aria-label="mailbox folders">
-            {cat && (
-              <>
-                <ListItem>
-                  <ListItemText primary={<LinearProgress />} />
-                </ListItem>
-                <Divider component="li" light />
-              </>
-            )}
-          </List>
-        </div>
-      )} */}
       {cat && (
         <div className={styles.center}>
           <List sx={style} aria-label="mailbox folders">
