@@ -69,7 +69,7 @@ const style = {
 export default function Detail() {
   const [cat, setCat] = React.useState<Cat | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const FELIS_API = process.env.NEXT_PUBLIC_FELIS_API_DEV;
+  const FELIS_API = process.env.NEXT_PUBLIC_FELIS_API;
   console.log("FELIS_API", FELIS_API);
 
   const fetchCat = async () => {
