@@ -30,12 +30,10 @@ interface SingleCatResponse {
     url: string;
     height: number;
     width: number;
-    breeds: Array<{
-      name: string;
-      temperament: string;
-      origin: string;
-      description: string;
-    }>;
+    name: string;
+    temperament: string;
+    origin: string;
+    description: string;
   }[];
 }
 
