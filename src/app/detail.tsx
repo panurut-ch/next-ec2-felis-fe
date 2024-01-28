@@ -25,15 +25,27 @@ interface Cat {
   height: number; // New property for adjusted height
 }
 
+// interface SingleCatResponse {
+//   data: {
+//     url: string;
+//     height: number;
+//     width: number;
+//     name: string;
+//     temperament: string;
+//     origin: string;
+//     description: string;
+//   }[];
+// }
+
 interface SingleCatResponse {
   data: {
-    url: string;
-    height: number;
-    width: number;
-    name: string;
-    temperament: string;
-    origin: string;
-    description: string;
+    catWidth: number;
+    catHeight: number;
+    catImageUrl: string;
+    catName: string;
+    catTemperament: string;
+    catOrigin: string;
+    catDescription: string;
   }[];
 }
 
@@ -72,24 +84,19 @@ export default function Detail() {
       console.log("catData", catData);
 
       if (catData) {
-        const originalWidth = catData.catWidth;
-        const originalHeight = catData.catHeight;
+        const originalWidth = (catData as any).catWidth;
+        const originalHeight = (catData as any).catHeight;
+        const catImageUrl = (catData as any).catImageUrl;
+        const catName = (catData as any).catName;
+        const catTemperament = (catData as any).catTemperament;
+        const catOrigin = (catData as any).catOrigin;
+        const catDescription = (catData as any).catDescription;
+
         const maxWidth = 600;
 
         // Calculate adjusted dimensions
         const newWidth = Math.min(originalWidth, maxWidth);
         const newHeight = (newWidth / originalWidth) * originalHeight;
-
-        const catImageUrl = catData.catImageUrl;
-        console.log("catImageUrl", catImageUrl);
-        const catName = catData.catName;
-        console.log("catName", catName);
-        const catTemperament = catData.catTemperament;
-        console.log("catTemperament", catTemperament);
-        const catOrigin = catData.catOrigin;
-        console.log("catOrigin", catOrigin);
-        const catDescription = catData.catDescription;
-        console.log("catDescription", catDescription);
 
         return {
           urlImage: catImageUrl,
