@@ -8,7 +8,8 @@ import Button from "@mui/material/Button";
 import styles from "@/app/page.module.css";
 import Type from "@/app/header";
 import Link from "next/link";
-import Detail from "@/app/detail";
+import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Define interfaces
 interface Cat {
@@ -20,13 +21,15 @@ interface SingleCatResponse {
 }
 
 // Define the Home component
-export default function Home() {
+export default function Page() {
   // State to hold the Pokemon data
   const [cat, setCat] = React.useState<Cat | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   // Function to fetch Pokemon data from the server
   const fetchCat = async () => {
     console.log("Fetching Cat");
+    setLoading(true);
     try {
       const res = await axios.get<SingleCatResponse>(
         `https://api.panurut.dev/cat/image`
@@ -39,6 +42,8 @@ export default function Home() {
     } catch (e) {
       console.error("Error fetching Cat:", e);
       return null;
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
   };
 
@@ -56,11 +61,17 @@ export default function Home() {
   // JSX structure with Material-UI Button
   return (
     <main className={styles.main}>
-      <div>
-        <Type />
-      </div>
-      {/* <div className={styles.center}>
-        {cat && (
+      <Typography variant="h3" gutterBottom style={{ textAlign: "center" }}>
+        Spawn some meow!
+      </Typography>
+      {loading && (
+          <div className={styles.loader}>
+            {/* Display loader component when loading is true */}
+            <CircularProgress />
+          </div>
+        )}
+      <div className={styles.center}>
+        {!loading && cat && (
           <div className={styles.imageContainer}>
             <Image
               src={cat.urlImage}
@@ -71,12 +82,8 @@ export default function Home() {
             />
           </div>
         )}
-      </div> */}
-      <div>
-        <Detail />
       </div>
-      <br></br>
-      {/* <div className={styles.bottomButton}>
+      <div className={styles.bottomButton}>
         <Button
           variant="contained"
           color="primary"
@@ -85,21 +92,21 @@ export default function Home() {
         >
           Change Image
         </Button>
-      </div> */}
+      </div>
       <div className={styles.grid}>
+        {/* <a></a>
         <a></a>
-        <a></a>
-        <a></a>
+        <a></a> */}
         <Link
-          href="/playground"
+          href="/"
           className={styles.card}
           // target="_blank"
           // rel="noopener noreferrer"
         >
           <h2>
-            Meow ~ <span>-&gt;</span>
+            <span>&larr;</span> zzZ ~
           </h2>
-          <p>Random cat image playground.</p>
+          <p>Back to cat home!</p>
         </Link>
       </div>
     </main>

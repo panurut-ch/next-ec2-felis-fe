@@ -53,6 +53,7 @@
   grid-template-columns: repeat(4, minmax(25%, auto));
   max-width: 100%;
   width: var(--max-width);
+  text-align: right;
 }
 
 .card {
@@ -244,3 +245,7 @@
 .bottomButton {
   margin-top: -10px; /* Adjust the negative margin to bring the button closer */
 }
+
+/* .boldText {
+  font-weight: bold;
+} */
